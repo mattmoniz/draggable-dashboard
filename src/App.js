@@ -1,148 +1,89 @@
-// import React, { Component, useState } from "react";
-// import { Responsive, WidthProvider } from "react-grid-layout";
-// import DemoComponent from "./components/demoComponent"
+// https://www.npmjs.com/package/react-grid-layout
+// https://javascript.plainenglish.io/tired-of-boring-static-dashboards-lets-build-a-fully-customizable-dashboard-in-react-88cb5369cfe1
 
-// const ResponsiveGridLayout = WidthProvider(Responsive);
-// // ResponsiveGridLayout is our ReactGridLayout which is responsive automatically.
+import React, { useState } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import { CssBaseline, ThemeProvider, createMuiTheme } from "@material-ui/core";
+import Content from "./Content";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import "./styles.css";
 
-// const App = () => {
-//   const [value, setValue] = useState(true);
+const drawerWidth = 240;
 
-//   const handleClick = ()=> setValue(value => !value);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
 
-//       let layout1 = [
-//         { i: "a", x: 0, y: 0, w: 4, h: 1 },
-//         { i: "b", x: 4, y: 0, w: 4, h: 1 },
-//         { i: "c", x: 8, y: 0, w: 4, h: 1 },
-//         { i: "d", x: 0, y: 1, w: 4, h: 1 },
-//         { i: "e", x: 4, y: 1, w: 4, h: 1 },
-//         { i: "f", x: 8, y: 1, w: 4, h: 1 },
-//       ];
-//       let layout2 = [
-//         { i: "a", x: 0, y: 0, w: 6, h: 1 },
-//         { i: "b", x: 6, y: 0, w: 6, h: 1 },
-//         { i: "c", x: 0, y: 1, w: 6, h: 1 },
-//         { i: "d", x: 6, y: 1, w: 6, h: 1 },
-//         { i: "e", x: 0, y: 2, w: 6, h: 1 },
-//         { i: "f", x: 6, y: 2, w: 6, h: 1 },
-//       ];
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  },
+}));
 
-//       let layout = { lg: value === true ? layout1 : layout2 };
+export default function App() {
+  const classes = useStyles();
+  const [open, setOpen] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
-//   return (
-//     <div>
-//       <button style={{ marginLeft: "45%" }} onClick={handleClick}>
-//         {" "}
-//         {value === true ? "Increase" : "Decrease"} Grid by 2 columns
-//       </button>
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
 
-//       <ResponsiveGridLayout
-//         className="layout"
-//         layouts={layout}
-//         breakpoints={{ lg: 1200 }}
-//         cols={{ lg: 12 }}
-//         rowHeight={281}
-//         width={1200}
-//       >
-//         <div key="a" style={{ backgroundColor: "yellow" }}>
-//           <DemoComponent color={"yellow"} />
-//         </div>
-//         <div key="b" style={{ backgroundColor: "green" }}>
-//           <DemoComponent color={"green"} />
-//         </div>
-//         <div key="c" style={{ backgroundColor: "red" }}>
-//           <DemoComponent color={"red"} />
-//         </div>
-//         <div key="d" style={{ backgroundColor: "blue" }}>
-//           <DemoComponent color={"blue"} />
-//         </div>
-//         <div key="e" style={{ backgroundColor: "violet" }}>
-//           <DemoComponent color={"violet"} />
-//         </div>
-//         <div key="f" style={{ backgroundColor: "lemonchiffon" }}>
-//           <DemoComponent color={"lemonchiffon"} />
-//         </div>
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-//       </ResponsiveGridLayout>
-//     </div>
-//   );
-// }
+  const theme = createMuiTheme({
+    palette: {
+      type: darkMode ? "dark" : "light",
+    },
+  });
 
-// export default App
-
-import React, { Component } from "react";
-// import GridLayout from 'react-grid-layout';
-// import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
-import { Responsive, WidthProvider } from "react-grid-layout";
-import DemoComponent from "./components/demoComponent";
-const ResponsiveGridLayout = WidthProvider(Responsive);
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      value: true,
-    };
-    this.onHandle = this.onHandle.bind(this);
-  }
-  onHandle() {
-    this.setState((prevState) => ({
-      value: !prevState.value,
-    }));
-  }
-  render() {
-    var layout = [
-      { i: "a", x: 0, y: 0, w: 4, h: 1 },
-      { i: "b", x: 4, y: 0, w: 4, h: 1 },
-      { i: "c", x: 8, y: 0, w: 4, h: 1 },
-      { i: "d", x: 0, y: 1, w: 4, h: 1 },
-      { i: "e", x: 4, y: 1, w: 4, h: 1 },
-      { i: "f", x: 8, y: 1, w: 4, h: 1 },
-    ];
-    var layout1 = [
-      { i: "a", x: 0, y: 0, w: 6, h: 1 },
-      { i: "b", x: 6, y: 0, w: 6, h: 1 },
-      { i: "c", x: 0, y: 1, w: 6, h: 1 },
-      { i: "d", x: 6, y: 1, w: 6, h: 1 },
-      { i: "e", x: 0, y: 2, w: 6, h: 1 },
-      { i: "f", x: 6, y: 2, w: 6, h: 1 },
-    ];
-
-    var layout = { lg: this.state.value === true ? layout : layout1 };
-
-    return (
-      <div>
-        <button style={{ marginLeft: "45%" }} onClick={this.onHandle}>
-          {this.state.value === true ? "Increase" : "Decrease"} Grid by 2
-          columns
-        </button>
-        <ResponsiveGridLayout
-          className="layout"
-          layouts={layout}
-          breakpoints={{ lg: 1200 }}
-          cols={{ lg: 12 }}
-          rowHeight={281}
-          width={1200}
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <Header
+          handleDrawerToggle={handleDrawerToggle}
+          toggleDarkMode={toggleDarkMode}
+          darkMode={darkMode}
+        />
+        <Sidebar handleDrawerClose={handleDrawerClose} open={open} />
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
         >
-          <div key="a" style={{ backgroundColor: "yellow" }}>
-            <DemoComponent color={"yellow"} />
-          </div>
-          <div key="b" style={{ backgroundColor: "green" }}>
-            <DemoComponent color={"green"} />
-          </div>
-          <div key="c" style={{ backgroundColor: "red" }}>
-            <DemoComponent color={"red"} />
-          </div>
-          <div key="d" style={{ backgroundColor: "blue" }}>
-            <DemoComponent color={"blue"} />
-          </div>
-          <div key="e" style={{ backgroundColor: "violet" }}>
-            <DemoComponent color={"violet"} />
-          </div>
-          <div key="f" style={{ backgroundColor: "lemonchiffon" }}>
-            <DemoComponent color={"lemonchiffon"} />
-          </div>
-        </ResponsiveGridLayout>
+          <div className={classes.drawerHeader} />
+          <Content />
+        </main>
       </div>
-    );
-  }
+    </ThemeProvider>
+  );
 }
